@@ -1,0 +1,20 @@
+<!-- Navigation-->
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav" style="background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url('assets/main/img/bg-masthead.jpg');">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#page-top">{{title}}</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="container px-4 px-lg-3"></div>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul #navIndex  *ngFor="let item of navItems" [attr.menu-item]="item.index"  class="navbar-nav my-lg-0">
+                <li class="nav-item" (click)="selectedMenu(navIndex)">
+                    <a class="nav-link scrollto {{item.active}}"  [routerLink]="[{ outlets: { primary: [item.routePath] } }] " [queryParams]="item.queryParams">
+                        {{item.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+  </nav>

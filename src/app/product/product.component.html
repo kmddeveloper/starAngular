@@ -1,0 +1,48 @@
+<section class="page-section" id="contact">
+    <mat-progress-spinner [mode]="'indeterminate'" [diameter]="40" *ngIf="loading$ | async"></mat-progress-spinner>
+
+    <div class="container-fluid justify-content-center">
+
+        <div>
+            <a class="nav-link scrollto "  [routerLink]="['/product']" [queryParams]="{'pagenum':1, 'pagesize':5, 'categoryid':1}">
+               next page
+            </a>
+        </div>
+        <div *ngIf="!this.errorMsg" class="product-tile"><h4>Water Sports Shoes</h4></div>
+        <div *ngIf="this.errorMsg" class="product-tile"><h4>{{this.errorMsg}}</h4></div>
+        
+        <div *ngIf="products && products.length > 0">            
+            <div class="row mt-5"  *ngFor="let prodCol of products">
+                <div class="col-sm-3" *ngFor="let product of prodCol">
+                    <div class="card"><img src="{{product.image_Url}}" class="card-img-top" >
+
+                        <div class="card-body pt-0 px-0">
+                                          
+                            
+                            <div style="min-height:110px;max-height:110px;">  
+                                <small class="card-blockquote text-xs-center">{{product.description | dashToSpace:'-'}}</small>
+                            </div>  
+
+                            <div class="mx-3 mt-3 mb-2">
+                                <app-star [rating]=4.5 (notify)='onNotify($event)'></app-star>
+                            </div>
+                        
+                            <div class="mx-3 mt-3 mb-2">
+                                {{product.price | currency}}
+                            </div>
+                            
+                            
+
+                            <div class="mx-3 mt-3 mb-2">
+                                <button type="button" class="btn btn-dark btn-md">
+                                    <small>Buy</small></button>
+                            </div> 
+                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
