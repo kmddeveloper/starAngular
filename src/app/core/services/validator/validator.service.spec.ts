@@ -1,17 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TokenService } from './token.service';
+import { ValidatorService } from './validator.service';
 
-describe('TokenService', () => {
-  let service: TokenService;
+describe('ValidatorService', () => {
+  let service: ValidatorService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TokenService);
+    service = TestBed.inject(ValidatorService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 });
-

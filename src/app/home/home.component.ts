@@ -6,7 +6,7 @@ import {User} from '../core/models/User';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: [
-              '/src/assets/main/css/styles.css',
+              '../../assets/main/css/styles.css',
               './home.component.css'
              ]
 })

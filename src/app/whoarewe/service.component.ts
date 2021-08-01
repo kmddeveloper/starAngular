@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-service',
   templateUrl: './service.component.html',
   styleUrls: [
-              '/src/assets/main/css/styles.css',
+              '../../assets/main/css/styles.css',
               './service.component.css'
              ]
 })

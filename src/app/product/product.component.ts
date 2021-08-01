@@ -7,7 +7,8 @@ import {LoadingService} from '../core/services/loading.service';
 import { UtilsService } from '../core/services/utils.service';
 import { Product} from '../core/models/Product';
 import {IproductList} from './iproduct-list';
-import {ProductService} from 'src/app/core/services/product/product.service';
+import {ProductService} from '../core/services/product/product.service';
+import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',

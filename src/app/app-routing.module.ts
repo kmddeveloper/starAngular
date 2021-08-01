@@ -28,6 +28,18 @@ const routes: Routes = [
     outlet:"" 
   },
   {
+    path: 'login' , 
+    canActivate: [],
+    loadChildren: ()=> import(`src/app/login/login.module`).then(m=> m.LoginModule),
+    outlet:"" 
+  },
+  {
+    path: 'register' , 
+    canActivate: [],
+    loadChildren: ()=> import(`src/app/registration/registration.module`).then(m=> m.RegistrationModule),
+    outlet:"" 
+  },
+  {
     path: 'contact' ,   
     component:ContactComponent, 
     outlet:"" 

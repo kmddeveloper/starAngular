@@ -13,6 +13,7 @@ import {TokenService} from './core/services/token.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavComponent } from './shared/nav.component';
 
+
 console.log('app module loaded');
 
 @NgModule({
@@ -29,6 +30,7 @@ console.log('app module loaded');
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    
   ],
   providers: [
               {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi:true },

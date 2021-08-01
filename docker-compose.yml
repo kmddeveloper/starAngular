@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+    angular-service:
+       container_name: star-jamboree-container
+       build: .
+       ports:
+           - "4200:80"
+
+
+
+# To run docker-compose
+# docker-compose build angular-service
+# docker-compose up 
+# then point the browser to localhost:4200 
+           

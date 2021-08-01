@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['/src/assets/main/css/styles.css',
-              './nav.component.css'
+  styleUrls: ['../../assets/main/css/styles.css',
+              './nav.component.css',
+              
              ]
 })
 export class NavComponent implements OnInit {
@@ -26,7 +27,20 @@ export class NavComponent implements OnInit {
       active: ""
      },
      {
-       index: 2,
+      index: 2,
+      name: "Login",
+      routePath:  "login",
+      queryParams: '',
+      active: ""
+      },
+      {
+        index: 3,
+        name: "register",
+        routePath:  "register",        
+        active: ""
+      },
+      {
+       index: 4,
        name: "Contact",
        routePath:  "contact",
        queryParams: '',
