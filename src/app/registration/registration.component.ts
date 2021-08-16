@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { ValidatorService } from '../core/services/validator/validator.service';
+import { RegistrationService } from '../core/services/registration/registration.service';
+import { User } from '../core/models/User';
+import { Router } from '@angular/router';
 function customValidatorRange(c: AbstractControl): {[key:string]:boolean} |null{
   if (c.value !=null && (isNaN(c.value) || c.value < 1 || c.value > 5))
     return {'range':true};
@@ -17,11 +20,16 @@ function customValidatorRange(c: AbstractControl): {[key:string]:boolean} |null{
 })
 export class RegistrationComponent implements OnInit {
 
+  errorMessage:null;
+
   registrationForm:FormGroup;
 
   
 
-  constructor(private formBuilder:FormBuilder, private validatorService:ValidatorService) { }
+  constructor(private formBuilder:FormBuilder, 
+              private validatorService:ValidatorService,
+              private registrationService:RegistrationService,
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -72,6 +80,10 @@ export class RegistrationComponent implements OnInit {
     
     console.log('registration loaded');
   }
+ 
+  get error(){
+    return this.errorMessage;
+  }
 
   get registrationFormControls(){
     return this.registrationForm.controls;
@@ -117,6 +129,31 @@ export class RegistrationComponent implements OnInit {
 
   register():void{
     console.log('register click!');
+    console.log(this.registrationForm.controls.email.value);
+    console.log(this.registrationForm.controls.firstName.value);
+    console.log(this.registrationForm.controls.lastName.value);
+    console.log(this.registrationForm.controls.password.value);
+
+    let user :  User = {
+      email: this.registrationForm.controls.email.value,
+      password: this.registrationForm.controls.password.value,
+      firstName: this.registrationForm.controls.firstName.value,
+      lastName: this.registrationForm.controls.lastName.value
+    };
+    let regSub = this.registrationService.register(user).subscribe({
+
+      next: data => {
+        if (data){
+          this.router.navigateByUrl('/login');
+        }
+      },
+      error: error => {
+        this.errorMessage = error;
+      },
+      complete: ()=> {
+        regSub.unsubscribe();
+      }
+    });
   }
 
 }

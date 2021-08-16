@@ -1,14 +1,15 @@
 
 //ng g c product/product --flat
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute,  ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
-import {LoadingService} from '../core/services/loading.service';
-import { UtilsService } from '../core/services/utils.service';
+import {LoadingService} from 'src/app/core/services/loading/loading.service';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { Product} from '../core/models/Product';
 import {IproductList} from './iproduct-list';
 import {ProductService} from '../core/services/product/product.service';
 import { AsyncPipe } from '@angular/common';
+import { PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -16,13 +17,22 @@ import { AsyncPipe } from '@angular/common';
 })
 export class ProductComponent implements OnInit, IproductList {
 
- loading$ = this.loader.loading$
- errorMsg :any;
+
  
  
   constructor(private productService: ProductService,
               private activatedRoute: ActivatedRoute, public loader: LoadingService,
               private utilsService: UtilsService ) { }
+
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
+
+  pageEvent: PageEvent;
+
+  loading$ = this.loader.loading$
+  errorMsg :any;
 
   paramMapSub:Subscription;              
   private _grid:Product[][] | undefined; //_grid:Product[][]=[];

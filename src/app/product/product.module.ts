@@ -6,6 +6,7 @@ import { ProductComponent } from './product.component';
 import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProductRoutingModule } from './product-routing.module';
 import { SharedModule} from 'src/app/shared/shared.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
@@ -21,6 +22,9 @@ console.log('product module loaded');
     MatProgressSpinnerModule,  
     ProductRoutingModule,
     SharedModule,
+    MatPaginatorModule,
+  
+
   
   ],
   exports:[

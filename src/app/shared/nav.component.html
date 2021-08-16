@@ -9,7 +9,7 @@
         <div class="container px-4 px-lg-3"></div>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul #navIndex  *ngFor="let item of navItems" [attr.menu-item]="item.index"  class="navbar-nav my-lg-0">
-                <li class="nav-item" (click)="selectedMenu(navIndex)">
+                <li class="nav-item" (click)="selectedMenu(navIndex)" *ngIf="item.roles.includes(role)" >
                     <a class="nav-link scrollto {{item.active}}"  [routerLink]="[{ outlets: { primary: [item.routePath] } }] " [queryParams]="item.queryParams">
                         {{item.name}}
                     </a>

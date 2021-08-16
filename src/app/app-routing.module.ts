@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import {ProductGuard} from 'src/app/core/guards/product.guard';
+import {CommonGuard} from 'src/app/core/guards/common.guard';
 
 const routes: Routes = [
 
@@ -18,34 +19,37 @@ const routes: Routes = [
   //},
   {
     path: 'home' , 
+    canActivate: [CommonGuard],
     component:HomeComponent, 
     outlet:"" 
   },
   {
     path: 'product' , 
-    canActivate: [ProductGuard],
+    canActivate: [CommonGuard, ProductGuard],
     loadChildren: ()=> import(`src/app/product/product.module`).then(m=> m.ProductModule),
     outlet:"" 
   },
   {
     path: 'login' , 
-    canActivate: [],
+    canActivate: [CommonGuard],
     loadChildren: ()=> import(`src/app/login/login.module`).then(m=> m.LoginModule),
     outlet:"" 
   },
   {
     path: 'register' , 
-    canActivate: [],
+    canActivate: [CommonGuard],
     loadChildren: ()=> import(`src/app/registration/registration.module`).then(m=> m.RegistrationModule),
     outlet:"" 
   },
   {
-    path: 'contact' ,   
+    path: 'contact' ,
+    canActivate: [CommonGuard],   
     component:ContactComponent, 
     outlet:"" 
   },
   {
      path:'**', //any other route
+     canActivate: [CommonGuard],
      component: HomeComponent,
      outlet:"" 
   }

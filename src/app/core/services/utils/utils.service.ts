@@ -1,3 +1,4 @@
+//ng g service core/services/utils
 import { Injectable } from '@angular/core';
 import { Params, ParamMap} from '@angular/router';
 

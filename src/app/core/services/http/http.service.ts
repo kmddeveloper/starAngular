@@ -27,11 +27,10 @@ export class HttpService {
       .pipe(
         retry(1),
         catchError(this.httpError)
-      )
-     
+      )     
     }
   
-    postAsync<T>(endPoint:string, postField:string): Observable<T> {
+    postAsync<T>(endPoint:string, postField:any): Observable<T> {
       return this.httpClient.post<T>(endPoint, postField, this.httpHeaderJson)
       .pipe(
         retry(1),
@@ -57,18 +56,17 @@ export class HttpService {
   
     httpError(error) {
       console.log('inside httpError');
+      console.log(error);
       let msg = '';
       if(error.error instanceof ErrorEvent) {
         // client side error
         msg = error.error.message;
       } else {
         // server side error
-        msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        msg = `Error Code: ${error.status}\nMessage: ${error.error?error.error:error.message}`;
       }
       console.log(msg);
-      return throwError(msg);
-
-  
+      return throwError(msg);  
     }
 
 

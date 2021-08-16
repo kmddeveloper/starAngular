@@ -1,10 +1,13 @@
 <section class="page-section" id="contact">
     <div class="container px-4 px-lg-5" style="max-width:600px;">
         <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-lg-8 col-xl-6 text-center">
+            <div class="col-xl-12 text-center">
                 <h2 class="mt-0">User Registration</h2>
                 <hr class="divider" />            
             </div>
+            <div class="col-xl-12 text-center alert alert-warning" *ngIf="error">
+                <strong>Warning!</strong> {{error}}.
+            </div> 
         </div>
         <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
             <div class="col-lg-8">
@@ -23,7 +26,7 @@
 
                       <!-- LastName input-->
                       <div class="form-floating mb-3">
-                        <input class="form-control" id="email" type="text" formControlName="lastName" 
+                        <input class="form-control" id="lastName" type="text" formControlName="lastName" 
                             placeholder="Enter your last name"
                             [ngClass]="{'is-invalid': (registrationForm.get('lastName').touched || registrationForm.get('lastName').dirty) && !registrationForm.get('lastName').valid}"
                             />
@@ -105,7 +108,7 @@
                     <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
                     <!-- Submit Button-->
                     <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit"  [disabled]="!registrationForm.valid" >Register</button></div>
-
+                   
                    <div>
                         <span>touched: {{registrationForm.touched}}<br></span>
                         <span>valid: {{registrationForm.valid}}<br></span>

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from "rxjs/operators";
-import { EnvService } from './env.service'
+import { EnvService } from 'src/app/core/services/env/env.service'
 
 @Injectable({
   providedIn: 'root'

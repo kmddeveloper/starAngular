@@ -23,4 +23,9 @@ import { LoginComponent } from './login.component';
     ReactiveFormsModule,
   ]
 })
-export class LoginModule { }
+export class LoginModule 
+{
+
+
+  
+ }

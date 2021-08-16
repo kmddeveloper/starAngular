@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { PRIMARY_OUTLET, Router, RoutesRecognized, UrlSerializer } from '@angular/router';
+import { StateService } from 'src/app/core/services/state/state.service';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['../../assets/main/css/styles.css',
-              './nav.component.css',
-              
+              './nav.component.css',              
              ]
 })
 export class NavComponent implements OnInit {
 
+  private role:string;
   title: string = "Star Jamboree"
   navItems:any = [
     {
@@ -17,40 +19,94 @@ export class NavComponent implements OnInit {
       name: "Home",
       routePath: "home",
       queryParams: '',
-      active: "active"
+      active: "active",      
+      roles: ['guest', 'user', 'admin']      
      },
      {
       index: 1,
       name: "Products",
       routePath: "product",
       queryParams: {'pagenum':1, 'pagesize':10, 'categoryid':1},
-      active: ""
+      active: "",
+      roles: ['guest', 'user', 'admin']      
      },
      {
       index: 2,
       name: "Login",
       routePath:  "login",
       queryParams: '',
-      active: ""
+      active: "",
+      roles: ['guest']      
       },
       {
         index: 3,
         name: "register",
         routePath:  "register",        
-        active: ""
+        active: "",
+        roles: ['guest']      
       },
       {
        index: 4,
        name: "Contact",
        routePath:  "contact",
        queryParams: '',
-       active: ""
+       active: "",
+       roles: ['guest', 'user', 'admin']      
+     },
+     {
+      index: 5,
+      name: "Logout",
+      routePath:  "logout",
+      queryParams: '',
+      active: "",
+      roles: ['user', 'admin']      
      }
   ];
 
-  constructor() { }
-
+  constructor(private router: Router, private urlSerializer:UrlSerializer, private stateService:StateService) {}
+ 
   ngOnInit(): void {
+
+    this.role='guest';
+    this.stateService.state$.subscribe({
+      next: state=>{   
+            console.log('nav subscribe state role=', state.role)     ;
+            this.role=state.role;
+      },
+      error: error => {
+          console.log('nav subsribe error=', error);
+      }
+    });
+    this.selectActiveMenu();    
+  }
+
+  private selectActiveMenu(){  
+    this.router.events.forEach((event) => {         
+      if(event instanceof RoutesRecognized ) {            
+        if (event && event.url){          
+          let urlTree = this.urlSerializer.parse(event.url);                     
+           if (urlTree.root){
+              let children = urlTree.root.children;              
+              if (children){
+                  let primary= children[PRIMARY_OUTLET];                 
+                  if (primary){
+                    let segments = primary.segments;
+                    if (segments && segments.length > 0){
+                        let currentRoute= segments[0].path;                              
+                        console.log('currentRoute',currentRoute);
+                         this.navItems.forEach(element => {                          
+                            if (element.routePath == currentRoute)
+                               element.active="active";                                                           
+                           else
+                               element.active="";            
+                          }); 
+                    }                   
+                  }
+              }
+           }           
+        }
+        return false;
+    }});
   }
 
   getRouteParams(params:any):string{
@@ -58,17 +114,16 @@ export class NavComponent implements OnInit {
          return params.join(", ");        
      }
      return '';
-
-
   }
+
   selectedMenu(e) {
-    let item = e.getAttribute('menu-item');
-    this.navItems.forEach(element => {
-      if (element.index == item)
-          element.active="active";
-      else
-          element.active="";            
-    });      
-  }
 
+    //let item = e.getAttribute('menu-item');
+    //this.navItems.forEach(element => {
+    //  if (element.index == item)
+     //     element.active="active";
+     // else
+     //     element.active="";            
+    //});      
+  }
 }

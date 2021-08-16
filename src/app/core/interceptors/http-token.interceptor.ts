@@ -14,6 +14,9 @@ import {
 import { throwError,Observable,BehaviorSubject, of } from 'rxjs';
 import { catchError, filter, take, switchMap, finalize, flatMap } from "rxjs/operators";
 import { NgIfContext } from '@angular/common';
+import { ConditionalExpr } from '@angular/compiler';
+import { TokenService } from 'src/app/core/services/token/token.service';
+import { Router } from '@angular/router';
 
 
 
@@ -26,7 +29,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
   private refreshTokenInProgress = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, private tokenService:TokenService, private router:Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -35,6 +38,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error && error.status === 401) {
+          console.log('error addAuthentication Token=', error);
          // 401 errors are most likely going to be because we have an expired token that we need to refresh.
           if (this.refreshTokenInProgress) {
             // If refreshTokenInProgress is true, we will wait until refreshTokenSubject has a non-null value
@@ -51,6 +55,10 @@ export class HttpTokenInterceptor implements HttpInterceptor {
             // Set the refreshTokenSubject to null so that subsequent API calls will wait until the new token has been retrieved
             this.refreshTokenSubject.next(null);
             
+            this.router.navigateByUrl('/login');
+            
+
+            //Call this when refreshToken is implemented.
             return this.refreshAccessToken(request,next).pipe(
               switchMap((success: boolean) => {               
                 this.refreshTokenSubject.next(success);
@@ -71,17 +79,20 @@ export class HttpTokenInterceptor implements HttpInterceptor {
   private refreshAccessToken(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     //Add logic here to refresh the token: get a new token, save it into session storage, thn add it to authenticationtoken.
     let params = {
-      token: this.getApiToken(),
-      refreshToken: this.getApiRefreshToken()
+      token: this.tokenService.getToken(),
+      refreshToken:   this.getApiRefreshToken()
     };
+
+
+
     return this.http.post('localhost:8080/auth/refresh', params)
       .pipe(
           flatMap((data: any) => {
             //If reload successful update tokens
             if (data.status == 200) {
               //Update tokens
-              this.setApiToken(data.result.token);
-              this.setApiToken(data.result.refreshToken);
+              this.tokenService.setToken(data.result.token);
+              this.tokenService.setToken(data.result.refreshToken);
               //Clone our fieled request ant try to resend it
               request = request.clone({
                 setHeaders: {
@@ -100,7 +111,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
 
   private addAuthenticationToken(request: HttpRequest<any>): HttpRequest<any> {
 
-    const token: string = this.getApiToken();
+    const token: string = this.tokenService.getToken();
 
     if (token) {
         request = request.clone({ headers: request.headers.set(this.AUTH_HEADER, 'Bearer ' + token) });
@@ -114,20 +125,8 @@ export class HttpTokenInterceptor implements HttpInterceptor {
 
   }
 
-
-  private getApiToken(){
-    return sessionStorage.getItem(this.TOKEN);
-  }
-
   private getApiRefreshToken(){
     return sessionStorage.getItem(this.REFRESH_TOKEN);
   }
 
-  private setApiToken(token){
-    sessionStorage.setItem(this.TOKEN, token);
-  }
-
-  private setApiRefreshToken(refreshToken){    
-    sessionStorage.setItem(this.REFRESH_TOKEN, refreshToken);
-  }
 }

@@ -3,19 +3,20 @@
 import { NgModule } from '@angular/core';
 import {  RouterModule, Routes, } from '@angular/router';
 import { ProductGuard } from '../core/guards/product.guard';
+import {CommonGuard } from '../core/guards/common.guard';
 import { ProductComponent } from './product.component';
 
 const routes: Routes = [
 
   {
     path: '' , 
-    canActivate: [ProductGuard],
+    canActivate: [CommonGuard, ProductGuard],
     redirectTo: 'product', pathMatch: 'full',
     outlet:"" 
   },  
   {
     path: 'product' , 
-    canActivate: [ProductGuard],
+    canActivate: [CommonGuard, ProductGuard],
     component: ProductComponent,
     outlet:"" 
   },

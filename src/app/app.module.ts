@@ -8,10 +8,11 @@ import { CopyrightComponent } from './copyright/copyright.component';
 import { ContactComponent } from './contact/contact.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ConfigService} from './core/services/config.service';
-import {TokenService} from './core/services/token.service';
+import { ConfigService} from 'src/app/core/services/config/config.service';
+import {TokenService} from 'src/app/core/services/token/token.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavComponent } from './shared/nav.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 
 console.log('app module loaded');
@@ -30,10 +31,11 @@ console.log('app module loaded');
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule
     
   ],
   providers: [
-              {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi:true },
+              {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi:true }, //Can have more than one.
               {provide: APP_INITIALIZER, useFactory:configFactory, multi: true, deps:[ConfigService,TokenService]}
              ],
   bootstrap: [AppComponent]
@@ -41,10 +43,11 @@ console.log('app module loaded');
 export class AppModule { }
 
 export function configFactory(configService:ConfigService, tokenService:TokenService){    
-    var token = tokenService.get();
-  
-    if (!tokenService.isValid(token))
+    var token = tokenService.getToken();
+    console.log("configFactory is called.");
+    if (tokenService.isValid(token))
     {
+      /*
       console.log('creating new token!');
       return ()=>     
 
@@ -66,6 +69,7 @@ export function configFactory(configService:ConfigService, tokenService:TokenSer
         }
 
       });
+      */
           //tokenService.new().subscribe(x=>{          
            // tokenService.set(x);
            // configService.loadConfig1().subscribe( x=> {
