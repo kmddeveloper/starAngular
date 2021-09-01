@@ -26,4 +26,48 @@ export class AuthService {
     
   }
 
+  auth(email:string, password:string): Observable<any>{  // 1
+ 
+    return new Observable<any>(  // 2
+        observer => {   // 3
+          let loginSub = this.login(email,password).subscribe({
+
+            next: session => {
+                if (session && session.userId > 0){            
+      
+                   let newTokenSub = this.tokenService.new(session.id).subscribe({
+                      next: token => {
+                        console.log('creating token-session=', session);
+                        console.log('creating token-sessionid=', session.id);
+                        this.stateService.setState(session);   
+                        this.tokenService.setToken(token.access_Token);
+                        console.log('created token-session=', session);   
+                        observer.next('success');
+                      },
+                      error: error => {
+                          console.log("tokenService.new error", error);
+                          newTokenSub.unsubscribe();
+                          observer.next(error);
+                      },
+                      complete: () => {
+                        newTokenSub.unsubscribe();
+                      }
+                      
+                  });            
+                }
+            },
+            error: error => {
+              console.log('error message this.login', error);
+              observer.next(error);
+              
+            },
+            complete: ()=> {
+              loginSub.unsubscribe();
+            }
+      
+           }
+          );
+        }//observer =>
+    );
+}
 }

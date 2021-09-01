@@ -1,24 +1,39 @@
 <section class="page-section" id="contact">
+
+    <div class="col-xl-12 text-center alert alert-warning" *ngIf="error">
+        <strong>Warning!</strong> {{error}}.
+    </div> 
+
     <mat-progress-spinner [mode]="'indeterminate'" [diameter]="40" *ngIf="loading$ | async"></mat-progress-spinner>
 
     <div class="container-fluid justify-content-center">
 
-        <div>
-            <a class="nav-link scrollto "  [routerLink]="['/product']" [queryParams]="{'pagenum':1, 'pagesize':5, 'categoryid':1}">
-               next page
-            </a>
+        <div *ngIf="totalItems > pageSize">
+            <mat-paginator
+               style-paginator
+               [length]="totalItems"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="onPageFired($event)"
+               
+               showFirstLastButtons
+               hidePageSize
+               aria-label="Select page">
+            </mat-paginator>
         </div>
-        <div *ngIf="!this.errorMsg" class="product-tile"><h4>Water Sports Shoes</h4></div>
-        <div *ngIf="this.errorMsg" class="product-tile"><h4>{{this.errorMsg}}</h4></div>
+        <div *ngIf="!this.error" class="product-tile"><h4>Water Sports Shoes</h4></div>
+        <div *ngIf="this.error" class="product-tile"><h4>{{this.error}}</h4></div>
         
         <div *ngIf="products && products.length > 0">            
             <div class="row mt-5"  *ngFor="let prodCol of products">
                 <div class="col-sm-3" *ngFor="let product of prodCol">
-                    <div class="card"><img src="{{product.image_Url}}" class="card-img-top" >
-
+                    
+                    <div class="card">                        
+                        <div>
+                            <img src="{{product.imageUrl}}"  (click)="detailPage(product.code)" class="card-img-top" >
+                        </div>
                         <div class="card-body pt-0 px-0">
-                                          
-                            
+                                                                    
                             <div style="min-height:110px;max-height:110px;">  
                                 <small class="card-blockquote text-xs-center">{{product.description | dashToSpace:'-'}}</small>
                             </div>  
@@ -31,33 +46,31 @@
                                 {{product.price | currency}}
                             </div>
                             
-                            
-
                             <div class="mx-3 mt-3 mb-2">
-                                <button type="button" class="btn btn-dark btn-md">
-                                    <small>Buy</small></button>
+                                <button type="button" class="btn btn-dark btn-md" (click)="onClick(product.code)">
+                                    <small>{{btnLabel}}</small>
+                                </button>
                             </div> 
-                                    
+                             
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div>
-            <mat-paginator [length]="length"
+        <div *ngIf="totalItems > pageSize">
+            <mat-paginator
+               style-paginator
+               [length]="totalItems"
                [pageSize]="pageSize"
                [pageSizeOptions]="pageSizeOptions"
-               (page)="pageEvent = $event"
+               (page)="onPageFired($event)"
+               
+               showFirstLastButtons
+               hidePageSize
                aria-label="Select page">
-            </mat-paginator>
-
-            <div *ngIf="pageEvent">
-            <h5>Page Change Event Properties</h5>
-            <div>List length: {{pageEvent.length}}</div>
-            <div>Page size: {{pageEvent.pageSize}}</div>
-            <div>Page index: {{pageEvent.pageIndex}}</div>
-            </div>
+            </mat-paginator>            
         </div>
     </div>
 </section>

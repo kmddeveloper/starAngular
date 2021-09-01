@@ -7,7 +7,10 @@ import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProductRoutingModule } from './product-routing.module';
 import { SharedModule} from 'src/app/shared/shared.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { EditComponent } from './edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ProductDetailComponent } from './product-detail.component';
+import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 
 
 console.log('product module loaded');
@@ -16,19 +19,24 @@ console.log('product module loaded');
 @NgModule({
   declarations: [
     ProductComponent,
-    
+    EditComponent,
+    ProductDetailComponent,    
   ],
   imports: [
     MatProgressSpinnerModule,  
     ProductRoutingModule,
     SharedModule,
     MatPaginatorModule,
+    ReactiveFormsModule,
+    NgxUsefulSwiperModule
+
+ 
   
 
   
   ],
   exports:[
-
+    ReactiveFormsModule
   ]
 })
 export class ProductModule { }

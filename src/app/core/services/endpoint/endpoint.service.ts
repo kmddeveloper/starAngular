@@ -29,8 +29,26 @@ export class EndpointService {
     return `${this.apiBaseUrl}/api/product/browse`;
   }
 
+  get totalItemsByCategoryId() {
+    return `${this.apiBaseUrl}/api/product/totalItems`;
+  }
+
   get sessionContext(){
     return `${this.apiBaseUrl}/api/session/getcontext`;
   }
 
+  get productEditItem(){
+
+    return `${this.apiBaseUrl}/api/product/editItem`;
+  }
+
+
+  get updateItem(){
+
+    return `${this.apiBaseUrl}/api/product/`;
+  }
+
+  get productByCode(){
+    return `${this.apiBaseUrl}/api/productdetail`
+  }
 }

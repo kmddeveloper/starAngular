@@ -13,6 +13,9 @@ export class NavComponent implements OnInit {
 
   private role:string;
   title: string = "Star Jamboree"
+  userName: string = "Hi Guest";
+
+
   navItems:any = [
     {
       index: 0,
@@ -68,10 +71,13 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
 
     this.role='guest';
+    
+
     this.stateService.state$.subscribe({
       next: state=>{   
             console.log('nav subscribe state role=', state.role)     ;
             this.role=state.role;
+            this.userName=state.first_name;
       },
       error: error => {
           console.log('nav subsribe error=', error);

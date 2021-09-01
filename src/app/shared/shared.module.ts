@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {StarComponent} from './star.component';
 import { DashToSpacePipe } from '../core/pipes/dash-to-space.pipe';
+import { BackComponent } from './back.component';
 
 @NgModule({
   declarations: [
     StarComponent,
-    DashToSpacePipe
+    DashToSpacePipe,
+    BackComponent
   ],
   imports: [
     CommonModule,    
@@ -15,7 +17,8 @@ import { DashToSpacePipe } from '../core/pipes/dash-to-space.pipe';
   exports:[   
     CommonModule,
     DashToSpacePipe,
-    StarComponent
+    StarComponent,
+    BackComponent
   ]
 })
 export class SharedModule { }

@@ -115,10 +115,10 @@ export class HttpTokenInterceptor implements HttpInterceptor {
 
     if (token) {
         request = request.clone({ headers: request.headers.set(this.AUTH_HEADER, 'Bearer ' + token) });
-    }
+    }    
 
     if (!request.headers.has('Content-Type')) {
-        request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
+        request = request.clone({ headers: request.headers.set('Content-Type', 'application/json; charset=utf-8') });
     }
 
     return request.clone({ headers: request.headers.set('Accept', 'application/json') });

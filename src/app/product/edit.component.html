@@ -1,0 +1,100 @@
+<section class="page-section" id="contact">
+    <app-back></app-back>
+    <div class="container px-4 px-lg-5" style="max-width:600px;">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-xl-12 text-center">
+                <h2 class="mt-0">Product Item</h2>
+                <hr class="divider" />            
+            </div>
+            <div class="col-xl-12 text-center alert alert-warning" *ngIf="error">
+                <strong>Warning!</strong> {{error}}.
+            </div> 
+        </div>
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-8">
+
+            <form [formGroup]="editProductForm" (ngSubmit)="update($event)">
+                                
+                <!-- Name input-->
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="name" type="text" formControlName="name" 
+                        placeholder="Enter your product name"
+                        [ngClass]="{'is-invalid': (editProductForm.get('name').touched || editProductForm.get('name').dirty) && !editProductForm.get('name').valid}"
+                        />
+                    <label for="name">Product Name</label>                     
+                    <div class="invalid-feedback" data-sb-feedback="name:required">Please enter product name</div>
+                </div>
+
+                <!-- Description input-->
+                <div class="form-floating mb-3 ">
+                    <textarea class="form-control" style='height: 100px' id="description" type="text" formControlName="description" rows="5"
+                        placeholder="Enter your product description"
+                        [ngClass]="{'is-invalid': (editProductForm.get('description').touched || editProductForm.get('description').dirty) && !editProductForm.get('description').valid}"
+                    ></textarea>
+                    <label for="description">Product Description</label>                     
+                    <div class="invalid-feedback" data-sb-feedback="name:required">Please enter product description</div>
+                </div>
+
+                <!-- Code Input-->
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="code" type="text" formControlName="code" 
+                        placeholder="Enter your product code with valid format ABC-999"
+                        [ngClass]="{'is-invalid': (editProductForm.get('code').touched || editProductForm.get('code').dirty) && !editProductForm.get('code').valid}"
+                        />
+                    <label for="code">Product Code</label>                     
+                    <div class="invalid-feedback" data-sb-feedback="name:required">Enter your product code with valid format, ABC-999</div>
+                </div>
+
+                  <!-- Price Input-->
+                  <div class="form-floating mb-3">
+                    <input class="form-control" id="price" type="text" formControlName="price" 
+                        placeholder="Enter your product price"
+                        [ngClass]="{'is-invalid': (editProductForm.get('price').touched || editProductForm.get('price').dirty) && !editProductForm.get('price').valid}"
+                        />
+                    <label for="price">Product Price</label>                     
+                    <div class="invalid-feedback" data-sb-feedback="name:required">Please enter product price</div>
+                </div>
+
+                 <!-- Image URL Input-->
+                 <div class="form-floating mb-3">
+                    <input class="form-control" id="image_url" type="text" formControlName="image_url" 
+                        placeholder="Enter your product imageUrl"
+                        [ngClass]="{'is-invalid': (editProductForm.get('image_url').touched || editProductForm.get('image_url').dirty) && !editProductForm.get('image_url').valid}"
+                        />
+                    <label for="imageurl">Product image Url</label>                     
+                    <div class="invalid-feedback" data-sb-feedback="name:required">Please enter product imageUrl</div>
+                </div>
+
+                <div class="form-floating mb-3">   
+                    <select class="form-control form-control-xs" data-dropup-auto="false" data-size="10"  formControlName="status">
+                        <option value="" disabled>Choose a status</option>
+                        <option *ngFor="let status of productStatus" [value]="status.key" [selected]="status.selected===true" >{{status.value}}</option>
+                    </select>
+                </div>
+
+                 <!-- Note Input-->
+                 <div class="form-floating mb-3">
+                    <input class="form-control" id="note" type="text" formControlName="note" 
+                        placeholder="Enter your product note"
+                        [ngClass]="{'is-invalid': (editProductForm.get('note').touched || editProductForm.get('note').dirty) && !editProductForm.get('note').valid}"
+                        />
+                    <label for="price">Product Note</label>                     
+                    <div class="invalid-feedback" data-sb-feedback="name:required">Please enter product note</div>
+                </div>
+
+                <div class="form-floating mb-3">   
+                    <select  class="form-control form-control-xs" data-dropup-auto="false" data-size="10"  formControlName="category">
+                        <option value="" disabled>Choose a category</option>
+                        <option *ngFor="let category of productCategory" [value]="category.key">{{category.value}}</option>
+                    </select>
+                </div>
+
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-xl" id="submitButton" type="submit"  [disabled]="!editProductForm.valid" >Update</button>
+                </div>
+            </form>
+        </div>          
+    </div>       
+</div>
+</section>
+

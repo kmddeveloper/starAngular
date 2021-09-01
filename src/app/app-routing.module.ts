@@ -4,6 +4,7 @@ import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import {ProductGuard} from 'src/app/core/guards/product.guard';
 import {CommonGuard} from 'src/app/core/guards/common.guard';
+import { LogoutComponent } from './logout/logout.component';
 
 const routes: Routes = [
 
@@ -25,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'product' , 
-    canActivate: [CommonGuard, ProductGuard],
+    canActivate: [CommonGuard],
     loadChildren: ()=> import(`src/app/product/product.module`).then(m=> m.ProductModule),
     outlet:"" 
   },
@@ -45,6 +46,12 @@ const routes: Routes = [
     path: 'contact' ,
     canActivate: [CommonGuard],   
     component:ContactComponent, 
+    outlet:"" 
+  },
+  {
+    path: 'logout' ,
+    canActivate: [],   
+    component:LogoutComponent, 
     outlet:"" 
   },
   {

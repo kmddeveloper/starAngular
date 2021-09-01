@@ -57,16 +57,23 @@ export class HttpService {
     httpError(error) {
       console.log('inside httpError');
       console.log(error);
+      return throwError(error);  
+
+      /*
       let msg = '';
+      msg = error;
+
       if(error.error instanceof ErrorEvent) {
         // client side error
         msg = error.error.message;
       } else {
         // server side error
-        msg = `Error Code: ${error.status}\nMessage: ${error.error?error.error:error.message}`;
+        msg = error; //`Error Code: ${error.status}\nMessage: ${error.error?error.error:error.message}`;
       }
+ 
       console.log(msg);
       return throwError(msg);  
+      */
     }
 
 

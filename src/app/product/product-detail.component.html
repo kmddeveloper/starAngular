@@ -1,0 +1,52 @@
+ <!-- ======= Portfolio Details Section ======= -->
+ <section id="portfolio-details" class="portfolio-details">    
+    <app-back></app-back>
+    <div class="container"  >
+      
+      <div class="row gy-4">
+
+        <div class="col-lg-8">
+          <div class="portfolio-details-slider swiper-container">
+
+            <swiper [config]="config"  [(index)]="index" *ngIf="loaded">            
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img [src]="product.imageUrl" [alt]="product.name"></div>
+                    <div class="swiper-slide"><img src="https://m.media-amazon.com/images/I/61ExSBpXT+L._AC_UL320_.jpg" [alt]="product.name"></div>
+                    <div class="swiper-slide"><img src="https://m.media-amazon.com/images/I/81J6zDA5aYL._AC_UL320_.jpg" [alt]="product.name"></div>
+                </div>
+             
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+
+                 
+              
+            </swiper>
+          </div>
+        </div>
+
+        <div class="col-lg-4" *ngIf="loaded">
+          <div class="portfolio-info">
+            <h3>Product information</h3>
+            <ul>
+              <li><strong>Name</strong>: {{product.name}}</li>
+              <li><strong>Category</strong>: {{product.category}}</li>
+              <li><strong>Status</strong>: {{product.status}}</li>
+              <li><strong>Price</strong>: {{product.price | currency: 'USD'}}</li>
+            </ul>
+          </div>
+          <div class="portfolio-description">
+            <h2>Description</h2>
+            <p>
+              {{product.description}}
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- End Portfolio Details Section -->

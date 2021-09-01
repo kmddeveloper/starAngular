@@ -4,6 +4,7 @@ import { Session } from 'src/app/core/models/Session';
 import {State} from 'src/app/core/models/State';
 import { TokenService } from 'src/app/core/services/token/token.service';
 import { SessionService } from 'src/app/core/services/session/session.service';
+import { RouterStateSnapshot } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -36,15 +37,29 @@ export class StateService {
     console.log('begin checkstate');
     let token = this.tokenService.getToken();  
     console.log('after gettoken=',token);
+
+
     if (this.tokenService.isValid(token))
       {
         //if (!this._state.value || this._state.value.user_id <=0)
         //{
           let sub = this.sessionService.getContext().subscribe({
-            next: session => {
-                this.setState(session);
-                console.log('valid token=> state needs to be reloaded',this._state.value);
-                this._state.next(this._state.value);
+            next: data => {
+                if (data)
+                {
+                  if (data.error)
+                  {
+                    this.tokenService.removeToken(); //Invalid token or token has been modified.
+                    this.resetState();
+                    console.log('reload session context error=', data.error);
+                    sub.unsubscribe();
+                  }
+                  else{
+                  this.setState(data.result);
+                  console.log('valid token=> state needs to be reloaded',this._state.value);
+                  this._state.next(this._state.value);
+                  }
+                }
             },
             error: error => {
                 this.tokenService.removeToken(); //Invalid token or token has been modified.

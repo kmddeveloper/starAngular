@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {SessionStorageService} from 'src/app/core/services/sessionStorage/session-storage.service';
 //ng g service core/services/token
 
 import { EndpointService } from 'src/app/core/services/endpoint/endpoint.service';
@@ -13,10 +14,9 @@ const jwtHelper = new JwtHelperService();
 
 export class TokenService {
 
-  constructor(private httpService:HttpService, private endpointService:EndpointService) { }
+  constructor(private httpService:HttpService, private endpointService:EndpointService, private sessionStorageService:SessionStorageService) { }
 
-  API_TOKEN = "apiToken";
-  API_REFRESH_TOKEN = "apiRefreshToken";
+ 
 
   new(sessionId:string):Observable<any>{
     console.log('gettoken call sessionid=',sessionId);
@@ -40,15 +40,15 @@ export class TokenService {
   }
 
   getToken(){
-    return sessionStorage.getItem(this.API_TOKEN);
+    return this.sessionStorageService.getToken();
   }
 
   setToken(token:string){
-    sessionStorage.setItem(this.API_TOKEN, token);
+    this.sessionStorageService.setToken(token);
   }
 
   removeToken(){
-    sessionStorage.removeItem(this.API_TOKEN);
+    this.sessionStorageService.removeToken();
   }
 
    isValid(token: string):boolean {
@@ -59,15 +59,15 @@ export class TokenService {
   
   
   getRefreshToken(){
-    return sessionStorage.getItem(this.API_REFRESH_TOKEN);
+    return this.sessionStorageService.getRefreshToken();
   }
 
   setRefreshToken(token:string){
-    sessionStorage.setItem(this.API_REFRESH_TOKEN, token);
+    this.sessionStorageService.setRefreshToken(token);
   }
 
   removeRefreshToken(){
-    sessionStorage.removeItem(this.API_REFRESH_TOKEN);
+    this.sessionStorageService.removeRefreshToken();
   }
 
 }

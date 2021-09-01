@@ -1,12 +1,14 @@
+
+
 export class Product{
     id:Number;
     name:String;
     description:String;
     code: String;
     category:String;
-    category_id:Number;
+    categoryId:Number;
     note:String;
-    status:String;
+    statusId:String;
     price:String;
-    image_url:String;
+    imageUrl:String;
 }

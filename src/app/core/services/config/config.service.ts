@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from "rxjs/operators";
 import { EnvService } from 'src/app/core/services/env/env.service'
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ConfigService {
 
   private readonly  _httpClient:HttpClient;
 
-  constructor(httpClient: HttpClient, private envService:EnvService)
+  constructor(httpClient: HttpClient, private authService:AuthService, private envService:EnvService)
    { 
       this._httpClient = httpClient;
    }
@@ -22,6 +23,22 @@ export class ConfigService {
   get config (){
     return this._settings;
   }
+
+  initialize():void{
+    let authSub=this.authService.auth('guest','guest').subscribe({
+      next: data=>{
+          console.log('STARTUP ........data=',data);
+      },
+      error: error => {
+          console.log('Initialize error=', error);
+          authSub.unsubscribe();
+      },
+      complete: ()=> {
+        console.log('Initialize completed');
+        authSub.unsubscribe();
+      }
+    });
+  };
 
   loadConfig():Observable<any>{
     return  this._httpClient.get(`${this.envService.apiBaseUrl}/api/user/5`)
