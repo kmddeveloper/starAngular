@@ -1,5 +1,5 @@
 {
-  "name": "star-angular",
+  "name": "starangular",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -22,6 +22,11 @@
     "@angular/platform-browser-dynamic": "~12.2.3",
     "@angular/router": "~12.2.3",
     "@auth0/angular-jwt": "^5.0.2",
+    "@ng-bootstrap/ng-bootstrap": "^10.0.0",
+    "bootstrap": "^5.1.1",
+    "bootstrap-icons": "^1.5.0",
+    "ngx-cookie-service": "^12.0.3",
+    "ngx-device-detector": "^2.1.1",
     "ngx-useful-swiper": "^10.0.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
@@ -47,5 +52,17 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.3.5"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.7.",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kmddeveloper/starAngular.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kmddeveloper/starAngular/issues"
+  },
+  "homepage": "https://github.com/kmddeveloper/starAngular#readme"
 }

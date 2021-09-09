@@ -3,21 +3,36 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav" style="background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url('assets/main/img/bg-masthead.jpg');">
     <div class="container">
         <a class="navbar-brand" href="#page-top">{{title}}</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="px-1 text-nowrap user-name">Hi {{userName}}</div>
-        <div class="container px-4 px-lg-3"></div>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul #navIndex  *ngFor="let item of navItems" [attr.menu-item]="item.index"  class="navbar-nav my-lg-0">
-                    <li class="nav-item" (click)="selectedMenu(navIndex)" *ngIf="item.roles.includes(role)" >
-                        <a class="nav-link scrollto {{item.active}}"  [routerLink]="[{ outlets: { primary: [item.routePath] } }] " [queryParams]="item.queryParams">
-                            {{item.name}}
-                        </a>
-                    </li>
-                </ul>
-               
-            </div>
-            
+        <div class="row">                
+                <div class="col" >
+                    <div class="collapse navbar-collapse"  style="margin-right:max(35px)" id="navbarResponsive">
+                        <ul #navIndex  *ngFor="let item of navItems" [attr.menu-item]="item.index"  class="navbar-nav my-lg-0">
+                            <li class="nav-item" (click)="selectedMenu(navIndex)" *ngIf="item.roles.includes(role)" >
+                                <a class="nav-link scrollto {{item.active}}"  [routerLink]="[{ outlets: { primary: [item.routePath] } }] " [queryParams]="item.queryParams">
+                                    {{item.name}}
+                                </a>
+                            </li>
+                        </ul>
+                        
+                    </div>     
+                    <button class="navbar-toggler navbar-toggler-right collapse-menu" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>                    
+                      
+                </div>
+
+                <div class="col">                    
+                    <div class="text-nowrap user-name">
+                        <span class="icon-head" *ngIf="isAuthUser"><i class="fas fa-user fa-2x" [title]="userName"></i></span>
+                        <span class="cart-basket"><i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i></span>
+                        <span class="cart-basket-count d-flex align-items-center justify-content-center">
+                            {{itemsInCart}}
+                        </span>
+                    </div>    
+                </div>                  
+                <app-modal></app-modal>               
+              
     </div>
+    </div>
+    
   </nav>

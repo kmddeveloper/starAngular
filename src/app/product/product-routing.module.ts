@@ -3,7 +3,7 @@
 import { NgModule } from '@angular/core';
 import {  RouterModule, Routes, } from '@angular/router';
 import { ProductGuard } from '../core/guards/product.guard';
-import {CommonGuard } from '../core/guards/common.guard';
+import {AppStateGuard } from '../core/guards/appState.guard';
 import { ProductComponent } from './product.component';
 import { EditComponent } from './edit.component';
 import { ProductDetailComponent } from './product-detail.component';
@@ -12,25 +12,25 @@ const routes: Routes = [
 
   {
     path: '' , 
-    canActivate: [CommonGuard],
+    canActivate: [AppStateGuard],
     redirectTo: 'product', pathMatch: 'full',
     outlet:"" 
   },  
   {
     path: 'product' , 
-    canActivate: [CommonGuard, ProductGuard],
+    canActivate: [AppStateGuard, ProductGuard],
     component: ProductComponent,
     outlet:"" 
   },
   {
     path: 'product-detail' , 
-    canActivate: [CommonGuard],
+    canActivate: [AppStateGuard],
     component: ProductDetailComponent,
     outlet:"" 
   },
   {
     path: 'edit' , 
-    canActivate: [CommonGuard],
+    canActivate: [AppStateGuard],
     component: EditComponent,
     outlet:"" 
   },

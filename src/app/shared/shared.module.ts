@@ -5,6 +5,7 @@ import {StarComponent} from './star.component';
 import { DashToSpacePipe } from '../core/pipes/dash-to-space.pipe';
 import { BackComponent } from './back.component';
 
+
 @NgModule({
   declarations: [
     StarComponent,

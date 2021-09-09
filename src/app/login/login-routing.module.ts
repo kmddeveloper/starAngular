@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import {LoginComponent} from './login.component';
 import { RouterModule, Routes } from '@angular/router';
+import { AppStateGuard } from '../core/guards/appState.guard';
 
 const routes: Routes = [
 
@@ -12,7 +13,7 @@ const routes: Routes = [
   },  
   {
     path: 'login' , 
-    canActivate: [],
+    canActivate: [AppStateGuard],
     component: LoginComponent,
     outlet:"" 
   }

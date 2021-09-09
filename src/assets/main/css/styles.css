@@ -10832,4 +10832,57 @@ mat-progress-spinner {
   z-index: 5;
 }
 
+.margin-right-35px{
+  right: 35px;
+}
+
+
+.collapse-menu {
+  top: 15px;
+  margin-right: 90px;
+}
+
+.icon-head {
+
+  position: absolute;
+  top: 25px;
+  right: 52px;
+  width: 30px;
+  height: 30px;
+}
+
+
+.cart-basket {
+  font-size: .6rem;
+  position: absolute;
+  top: 25px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  border-radius: 50%;
+}
+
+
+.cart-basket-count {
+  font-size: .8rem;
+  position: absolute;
+  top: 10px;
+  right: 13px;
+  width: 25px;
+  height: 25px;
+  color: #fff;
+  background-color: #ef6603;
+  border-radius: 50%;
+}
+
+.cart-popup{
+  position: absolute;
+  top: 10px;
+  right: -130px;
+}
+
+.modal-dialog{
+  margin-right:5px !important;
+}
 

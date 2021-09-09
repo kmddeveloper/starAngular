@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CommonGuard } from './common.guard';
+import { AppStateGuard } from './appState.guard';
 
-describe('CommonGuard', () => {
-  let guard: CommonGuard;
+describe('AppStateGuard', () => {
+  let guard: AppStateGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(CommonGuard);
+    guard = TestBed.inject(AppStateGuard);
   });
 
   it('should be created', () => {

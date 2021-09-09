@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Session } from 'src/app/core/models/Session';
 import {State} from 'src/app/core/models/State';
 import { TokenService } from 'src/app/core/services/token/token.service';
@@ -33,57 +33,63 @@ export class StateService {
     }    
   }
 
-  updateState(){
-    console.log('begin checkstate');
-    let token = this.tokenService.getToken();  
-    console.log('after gettoken=',token);
+  updateState():Observable<any>{
+    return new Observable<any>(  // 2
+      observer => {  
+        console.log('begin checkstate');
+        let token = this.tokenService.getToken();  
+        console.log('after gettoken=',token);
 
 
-    if (this.tokenService.isValid(token))
-      {
-        //if (!this._state.value || this._state.value.user_id <=0)
-        //{
-          let sub = this.sessionService.getContext().subscribe({
-            next: data => {
-                if (data)
-                {
-                  if (data.error)
-                  {
+        if (this.tokenService.isValid(token))
+          {
+            //if (!this._state.value || this._state.value.user_id <=0)
+            //{
+              let sub = this.sessionService.getContext().subscribe({
+                next: data => {
+                    if (data)
+                    {
+                      if (data.error)
+                      {
+                        this.tokenService.removeToken(); //Invalid token or token has been modified.
+                        this.resetState();
+                        console.log('reload session context error=', data.error);
+                        sub.unsubscribe();
+                      }
+                      else{
+                      this.setState(data.result);
+                      console.log('valid token=> state needs to be reloaded',this._state.value);
+                      this._state.next(this._state.value);
+                      observer.next('success');
+                      }
+                    }
+                },
+                error: error => {
                     this.tokenService.removeToken(); //Invalid token or token has been modified.
                     this.resetState();
-                    console.log('reload session context error=', data.error);
+                    console.log('reload session context error=', error);
                     sub.unsubscribe();
-                  }
-                  else{
-                  this.setState(data.result);
-                  console.log('valid token=> state needs to be reloaded',this._state.value);
-                  this._state.next(this._state.value);
-                  }
+                    observer.next('error');
+                },
+                complete: ()=> {
+                  console.log('HELLO update state completed');
+                  sub.unsubscribe();                  
                 }
-            },
-            error: error => {
-                this.tokenService.removeToken(); //Invalid token or token has been modified.
-                this.resetState();
-                console.log('reload session context error=', error);
-                sub.unsubscribe();
-            },
-            complete: ()=> {
-              console.log('HELLO update state completed');
-              sub.unsubscribe();
-            }
-          });
-        //}
-        //else{
-         // console.log('valid token',this._state.value);
-         // this._state.next(this._state.value);
-        //}
-      }
-    else{
+              });
+            //}
+            //else{
+            // console.log('valid token',this._state.value);
+            // this._state.next(this._state.value);
+            //}
+          }
+        else{
 
-      console.log('Invalid token');
-      this.resetState();
-    }
-    console.log('completed checkstate');
+          console.log('Invalid token');
+          this.resetState();
+          observer.next('reset');
+        }
+        console.log('completed checkstate');
+    });
       
   }
 

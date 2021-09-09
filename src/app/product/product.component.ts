@@ -11,6 +11,9 @@ import {ProductService} from '../core/services/product/product.service';
 import { AsyncPipe } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
 import { StateService } from '../core/services/state/state.service';
+import {ShoppingCartService} from 'src/app/core/services/shoppingCart/shopping-cart.service';
+
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -23,7 +26,8 @@ export class ProductComponent implements OnInit, IproductList {
  
   constructor(private productService: ProductService, private stateService:StateService,
               private activatedRoute: ActivatedRoute, public loader: LoadingService,
-              private utilsService: UtilsService, private router:Router ) { }
+              private utilsService: UtilsService, private router:Router,
+              private shoppingCartService:ShoppingCartService ) { }
 
   
   defaultCategoryId: Number = 1;              
@@ -59,7 +63,7 @@ export class ProductComponent implements OnInit, IproductList {
       this.stateService.state$.subscribe({
         next: state=>{    
               this.role=state.role;              
-              this.btnLabel=this.role=='admin'? 'Edit': 'Buy';
+              this.btnLabel=this.role=='admin'? 'Edit': 'Add to cart';
         },
         error: error => {
             console.log('state error=', error);
@@ -198,7 +202,7 @@ export class ProductComponent implements OnInit, IproductList {
     return grid;
   }
 
-  onClick(code){
+  onClick(id, code){
     let queryParams = this.activatedRoute.snapshot.queryParams;
     console.log('map', queryParams);
     if (this.role=='admin'){
@@ -207,16 +211,20 @@ export class ProductComponent implements OnInit, IproductList {
     }
     else{
       console.log('other user clicks=', code);
-      this.detailPage(code);
+      this.addToCart(id);
     }
     
   }
 
-  editPage(code){
+  editPage(code:string){
     this.router.navigate([`/product/edit`], {queryParams: {code: code}});
   }
 
-  detailPage(code){
+  detailPage(code:string){
     this.router.navigate([`/product/product-detail`], {queryParams: {code: code}});
+  }
+
+  addToCart(id:number){
+    this.shoppingCartService.addToCart(id, 1);
   }
 }

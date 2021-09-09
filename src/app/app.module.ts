@@ -14,7 +14,8 @@ import { NavComponent } from './shared/nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { TokenService } from './core/services/token/token.service';
 import { LogoutComponent } from './logout/logout.component';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './shared/modal.component';
 
 console.log('app module loaded');
 
@@ -26,6 +27,8 @@ console.log('app module loaded');
     ContactComponent,
     NavComponent,
     LogoutComponent,
+    ModalComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,7 @@ console.log('app module loaded');
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgbModule,
  
 
     
