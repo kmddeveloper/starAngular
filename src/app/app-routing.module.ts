@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import {ProductGuard} from 'src/app/core/guards/product.guard';
 import {AppStateGuard} from 'src/app/core/guards/appState.guard';
 import { LogoutComponent } from './logout/logout.component';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
 
@@ -28,6 +29,12 @@ const routes: Routes = [
     path: 'product' , 
     canActivate: [AppStateGuard],
     loadChildren: ()=> import(`src/app/product/product.module`).then(m=> m.ProductModule),
+    outlet:"" 
+  },
+  {
+    path: 'cart' , 
+    canActivate: [AppStateGuard],
+    component:CartComponent,
     outlet:"" 
   },
   {

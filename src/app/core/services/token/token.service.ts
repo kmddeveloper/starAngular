@@ -6,6 +6,7 @@ import { EndpointService } from 'src/app/core/services/endpoint/endpoint.service
 import { HttpService } from 'src/app/core/services/http/http.service';
 import { Observable } from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import { CookieService } from 'ngx-cookie-service';
 const jwtHelper = new JwtHelperService();
 
 @Injectable({
@@ -14,7 +15,8 @@ const jwtHelper = new JwtHelperService();
 
 export class TokenService {
 
-  constructor(private httpService:HttpService, private endpointService:EndpointService, private sessionStorageService:SessionStorageService) { }
+  constructor(private httpService:HttpService, private endpointService:EndpointService, 
+              private sessionStorageService:SessionStorageService, private cookieService:CookieService) { }
 
  
 
@@ -29,6 +31,7 @@ export class TokenService {
       next: token => {
         console.log('token', token);
         this.setToken(token.access_Token);
+
       },
       error: error => {
         console.log('Create token error=', error)

@@ -39,10 +39,28 @@
             </ul>
           </div>
           <div class="portfolio-description">
-            <h2>Description</h2>
-            <p>
-              {{product.description}}
-            </p>
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a [ngClass]="featureTab" id="nav-features-tab" data-toggle="tab" (click)="selectTab('features')" role="tab" aria-controls="nav-features" aria-selected="false">Features</a>
+                <a [ngClass]="specsTab"  id="nav-specs-tab" data-toggle="tab" (click)="selectTab('specs')" role="tab" aria-controls="nav-specs" aria-selected="false">Specs</a>
+                <a [ngClass]="otherTab"  id="nav-others-tab" data-toggle="tab" (click)="selectTab('others')" role="tab" aria-controls="nav-others" aria-selected="false">Others</a>
+                
+              </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+              <div [ngClass]="[featureContentTab]" id="nav-features" role="tabpanel" aria-labelledby="nav-features-tab">
+                <br>
+                {{product.description}}
+              </div>
+              <div [ngClass]="[specsContentTab]" id="nav-specs" role="tabpanel" aria-labelledby="nav-specs-tab">
+                {{product.description}}
+              </div>
+              <div [ngClass]="[otherContentTab]" id="nav-others" role="tabpanel" aria-labelledby="nav-others-tab">
+                
+              </div>
+            </div>
+
           </div>
         </div>
 

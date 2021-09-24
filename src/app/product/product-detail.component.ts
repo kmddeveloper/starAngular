@@ -20,6 +20,15 @@ export class ProductDetailComponent implements OnInit {
   @ViewChild(SwiperComponent, { static: false }) compRef?:SwiperComponent;
 
   
+  featureTab:string;
+  specsTab:string;
+  otherTab:string;
+
+  featureContentTab:string;
+  specsContentTab:string;
+  otherContentTab:string;
+
+
 
   error:String;
   _product:Partial<Product>={};
@@ -49,6 +58,7 @@ export class ProductDetailComponent implements OnInit {
               private location:Location) { }
 
   ngOnInit(): void {
+    this.initTabs();
     this.getProduct();
   
   }
@@ -94,6 +104,65 @@ export class ProductDetailComponent implements OnInit {
 
   goback(){
     this.location.back();
+  }
+
+  selectTab(tabName){
+    this.resetTabs();
+    switch(tabName){
+      case 'features':
+        this.featureTab= this.activeTabClass;        
+        this.featureContentTab=this.activeContentClass;
+        break;
+      case 'specs':
+        this.specsTab= this.activeTabClass;
+        this.specsContentTab=this.activeContentClass;
+        break;
+      case 'others':
+        this.otherTab= this.activeTabClass;
+        this.otherContentTab=this.activeContentClass;
+        break;
+      default:
+        this.featureTab= this.activeTabClass;
+        this.featureContentTab =this.activeContentClass;
+        break;        
+    }
+  }
+
+  resetTabs(){
+    this.featureTab= this.inActiveTabClass;
+    this.specsTab = this.inActiveTabClass;
+    this.otherTab = this.inActiveTabClass;
+
+    this.featureContentTab=this.inActiveContentClass;
+    this.specsContentTab = this.inActiveContentClass;
+    this.otherContentTab=this.inActiveContentClass;
+  }
+
+  initTabs(){
+    this.featureTab= this.activeTabClass;
+    this.specsTab = this.inActiveTabClass;
+    this.otherTab = this.inActiveTabClass;
+
+    this.featureContentTab=this.activeContentClass;
+    this.specsContentTab = this.inActiveContentClass;
+    this.otherContentTab=this.inActiveContentClass;
+  }
+
+  get activeTabClass(){
+    return "nav-item nav-link active";
+  }
+
+  get inActiveTabClass(){
+    return "nav-item nav-link";
+  }
+
+
+  get activeContentClass(){
+    return "tab-pane fade show active";   
+  }
+
+  get inActiveContentClass(){    
+    return "tab-pane fade";
   }
 
 }

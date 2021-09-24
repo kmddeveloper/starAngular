@@ -1,10 +1,13 @@
 //ng g service core/services/env
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs';
 import { tap } from "rxjs/operators";
 import { EnvService } from 'src/app/core/services/env/env.service'
+import { AuthResult } from '../../models/AuthResult';
 import { AuthService } from '../auth/auth.service';
+import { CookiesService } from '../cookies/cookies.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +18,8 @@ export class ConfigService {
 
   private readonly  _httpClient:HttpClient;
 
-  constructor(httpClient: HttpClient, private authService:AuthService, private envService:EnvService)
+  constructor(httpClient: HttpClient, private authService:AuthService, private envService:EnvService,
+              private cookiesService:CookiesService)
    { 
       this._httpClient = httpClient;
    }
@@ -27,7 +31,11 @@ export class ConfigService {
   initialize():void{
     let authSub=this.authService.auth('guest','guest').subscribe({
       next: data=>{
-          console.log('STARTUP ........data=',data);
+          if (data){
+            console.log('configService initialize success data=', data);            
+          }
+          
+          console.log('STARTUP ........data=',data);        
       },
       error: error => {
           console.log('Initialize error=', error);

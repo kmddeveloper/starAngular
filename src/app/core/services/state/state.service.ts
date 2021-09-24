@@ -5,6 +5,7 @@ import {State} from 'src/app/core/models/State';
 import { TokenService } from 'src/app/core/services/token/token.service';
 import { SessionService } from 'src/app/core/services/session/session.service';
 import { RouterStateSnapshot } from '@angular/router';
+import { CookiesService } from '../cookies/cookies.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class StateService {
 
   public state$ =  this._state.asObservable();
 
-  constructor(private tokenService:TokenService, private sessionService:SessionService) {}
+  constructor(private tokenService:TokenService, private sessionService:SessionService,
+              private cookiesService:CookiesService) {}
 
   set state(currentState:State){
      this._state.next(currentState);
@@ -58,6 +60,8 @@ export class StateService {
                       }
                       else{
                       this.setState(data.result);
+                      //create clientid in cookies, if it is no longer there for whatever reason.
+                      this.cookiesService.initClientId();
                       console.log('valid token=> state needs to be reloaded',this._state.value);
                       this._state.next(this._state.value);
                       observer.next('success');

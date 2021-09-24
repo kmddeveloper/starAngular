@@ -7,6 +7,8 @@ import { EndpointService } from 'src/app/core/services/endpoint/endpoint.service
 import { HttpService } from 'src/app/core/services/http/http.service';
 import { StateService } from 'src/app/core/services/state/state.service';
 import { TokenService } from 'src/app/core/services/token/token.service';
+import {AuthResult} from 'src/app/core/models/AuthResult';
+import { Token } from '@angular/compiler/src/ml_parser/lexer';
 
 
 @Injectable({
@@ -39,10 +41,12 @@ export class AuthService {
                       next: token => {
                         console.log('creating token-session=', session);
                         console.log('creating token-sessionid=', session.id);
+                        console.log('creating token', token);
                         this.stateService.setState(session);   
                         this.tokenService.setToken(token.access_Token);
                         console.log('created token-session=', session);   
-                        observer.next('success');
+                        let authResult = this.buildAuthResult(token.access_Token, session.id, token.clientGuidId);
+                        observer.next(authResult);
                       },
                       error: error => {
                           console.log("tokenService.new error", error);
@@ -69,5 +73,14 @@ export class AuthService {
           );
         }//observer =>
     );
-}
+  }
+
+  private buildAuthResult(accessToken:string, sessionid:string, clientid:string):AuthResult{
+   return {
+     clientid:clientid, 
+     token: accessToken, 
+     sessionid:sessionid, 
+     status:'sucess'
+    };
+  }
 }

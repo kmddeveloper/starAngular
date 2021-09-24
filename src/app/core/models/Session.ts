@@ -1,6 +1,6 @@
 export class Session {
     id:string;
-    userId: Number;
+    userId: number;
     email:string;
     userName:string;
     password:string;

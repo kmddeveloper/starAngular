@@ -51,4 +51,14 @@ export class EndpointService {
   get productByCode(){
     return `${this.apiBaseUrl}/api/productdetail`
   }
+
+
+  get addItemToCart(){
+    return `${this.apiBaseUrl}/api/cart`
+  }
+
+  get getCart(){
+    return `${this.apiBaseUrl}/api/cart`
+  }
+
 }

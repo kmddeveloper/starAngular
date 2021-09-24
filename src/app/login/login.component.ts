@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { TokenService } from 'src/app/core/services/token/token.service';
 import {  StateService } from 'src/app/core/services/state/state.service';
 import { errorBase } from '../core/common/errorBase';
+import { AuthResult } from '../core/models/AuthResult';
 
 @Component({
   selector: 'app-login',
@@ -48,8 +49,8 @@ export class LoginComponent extends errorBase implements OnInit {
     console.log('calling auth');
     this.resetError();
     let loginSub = this.authService.auth(email,password).subscribe({
-        next: data =>{
-            if (data=='success'){
+        next: data =>{       
+            if (data){
               this.router.navigateByUrl('/home');
               console.log('authService.auth data=>', data);
             }
