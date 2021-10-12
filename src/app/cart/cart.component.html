@@ -1,109 +1,63 @@
+
 <section class="page-section" id="contact">
-
-
-    <div class="row">
-        <div class="col-sm-9">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>Holy guacamole!</strong> You should check in on some of those fields below.                
+    <div class="position-relative" style="top: -2.5rem !important;"> 
+        <button type="button" class="close position-absolute top-0 end-0" aria-label="Close" style="cursor: pointer" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="row" *ngIf="error">
+        <div class="col-sm-9" >
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                <strong>Warning!</strong> {{error}}                
             </div>
         </div>
         <div class="col-sm-3">           
-            <button type="button" class="btn btn-warning btn-lg">Proceed to checkout</button>        
-            <div>
-                <span class="call-to-action"> Hurry! You've 4 items in your cart</span>
-                <br>
-                <span class="call-to-action-subtotal"> Subtotal: $56.88</span>
-            </div>
+           
         </div>
     </div>
 
     
+    <div class="row">
+        <div class="col-sm-8" >
+            <div class="card" *ngFor="let item of itemsInCart">
+                <div class="card-body">
+                    <div class="row" >
+                    
+                        <div class="col-2">
+                        <figure class="figure cartImage" >
+                            <img [src]="item.image_url" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">               
+                        </figure>
+                        </div>
+                        <div class="col">              
+                        
+                            <div><span class="txtLabel">Description:</span><span> {{item.description}}</span></div>
+                            <div><span class="txtLabel">Price:</span><span> {{item.price | currency}}</span></div>    
+                            <div><span class="txtLabel">Size:</span><span> {{item.size}} or [{{item.women_size}} Women]</span></div>
+                            <div><span class="txtLabel">Color:</span><span> {{item.color}}</span></div>
+                         
+                            <div class="input-group" style="width:150px;">
+                                <label class="quantity" for="quantity">Quantity</label>
+                                <select class="form-select form-select-sm selectpicker  f" aria-label=".form-select-sm example">
+                                    <option *ngFor="let n of numSequence(5); let i = index;"  value="{{i+1}}}" [selected]="item.quantity == i+1" >{{i+1}}</option>
+                                </select>
+                            </div>
+                            <div class="undo">
+                                <button type="button" class="btn btn-outline-warning btn-sm">Remove</button>
+                            </div>
+                        </div>
 
-    <div class="card w-75">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-2">
-                <figure class="figure cartImage" >
-                    <img src="https://m.media-amazon.com/images/I/61ExSBpXT+L._AC_UL320_.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">               
-                </figure>
-                </div>
-                <div class="col">              
-                   
-                    <div><span class="txtLabel">Description:</span><span> long description very long</span></div>
-                    <div><span class="txtLabel">Price:</span><span> 5.88:</span></div>    
-                    <div class="attributes">Package comes in 5 units</div>                                    
-                    <div class="cart-status">
-                        <span>Ships in 1 -5 business days</span>
-                    </div>
-                    <div class="input-group" style="width:150px;">
-                        <label class="quantity" for="quantity">Quantity</label>
-                         <select class="form-select form-select-sm selectpicker  f" aria-label=".form-select-sm example">
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                          </select>
-                    </div>
-                    <div class="undo">
-                        <button type="button" class="btn btn-outline-warning btn-sm">Remove</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-sm-4">   
+            <button type="button" class="btn btn-warning btn-lg">Proceed to checkout</button>        
+            <div>
+                <span class="call-to-action">{{message}}</span>
+                <br>
+                <span class="call-to-action-subtotal"> Subtotal: {{total | currency}}</span>
+            </div>
+        </div>         
     </div>
 
-    <div class="card w-75">
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment 2</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-
-    <div class="card w-75">
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-
-    <div class="card w-75">
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-
-
-    <div class="card w-75">
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-
-    <div class="card w-75">
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-
-    <div class="card w-75">
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-    <div class="card w-75">
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
 </section>

@@ -1,14 +1,14 @@
 
 export class ProductEditItem{
-    id:Number;
-    name:String;
-    description:String;
-    code: String;
-    categoryId:Number;
-    note:String;
-    statusId:Number;
-    price:String;
-    imageUrl:String;
+    id:number;
+    name:string;
+    description:string;
+    code: string;
+    categoryId:number;
+    note:string;
+    statusId:number;
+    price:string;
+    imageUrl:string;
     categoryList:[];
     statusList: []
 }

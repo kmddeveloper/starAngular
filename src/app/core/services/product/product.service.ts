@@ -3,6 +3,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product} from 'src/app/core/models/Product';
+import { ProductColor } from 'src/app/core/models/ProductColor';
+import { ProductSize } from 'src/app/core/models/ProductSize';
 import { ApiResponse} from 'src/app/core/models/ApiResponse';
 import { ProductEditItem} from 'src/app/core/models/ProductEditItem';
 import { EndpointService } from 'src/app/core/services/endpoint/endpoint.service';
@@ -40,8 +42,23 @@ export class ProductService {
 
   }
 
-  getProductByCode(code:String):Observable<ApiResponse<Product>>{
-    return this.httpService.getAsync<ApiResponse<Product>>(`${this.endpointService.productByCode}/${code}`);
-
+  getProducDetailtByCode(code:String):Observable<ApiResponse<any>>{
+    return this.httpService.getAsync<ApiResponse<any>>(`${this.endpointService.productDetailByCode}/${code}`);
   }
+
+  requestProfuctItemId(productId:number, colorId:number, sizeId:number):Observable<ApiResponse<number>>{
+    return this.httpService.postAsync<ApiResponse<number>>(`${this.endpointService.requestProductItemIdBySizeColor}`,{'productid':productId, 'colorid':colorId, 'sizeid':sizeId});
+  }
+
+  getAvailableColors(productId:number, sizeId:number):Observable<ApiResponse<ProductColor[]>>{
+    console.log(`${this.endpointService.availableColors}/${productId}/${sizeId}`);
+    return this.httpService.getAsync<ApiResponse<ProductColor[]>>(`${this.endpointService.availableColors}/${productId}/${sizeId}`);
+  }
+
+  getAvailableSizes(productId:number, colorId:number):Observable<ApiResponse<any>>{
+    console.log(`${this.endpointService.availableSizes}/${productId}/${colorId}`);
+    return this.httpService.getAsync<ApiResponse<any>>(`${this.endpointService.availableSizes}/${productId}/${colorId}`);
+  }
+
+
 }

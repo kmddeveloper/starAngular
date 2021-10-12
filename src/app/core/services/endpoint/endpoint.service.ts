@@ -48,10 +48,13 @@ export class EndpointService {
     return `${this.apiBaseUrl}/api/product/`;
   }
 
-  get productByCode(){
+  get productDetailByCode(){
     return `${this.apiBaseUrl}/api/productdetail`
   }
 
+  get requestProductItemIdBySizeColor(){
+    return  `${this.apiBaseUrl}/api/productdetail/RequestItemId`
+  }
 
   get addItemToCart(){
     return `${this.apiBaseUrl}/api/cart`
@@ -59,6 +62,14 @@ export class EndpointService {
 
   get getCart(){
     return `${this.apiBaseUrl}/api/cart`
+  }
+
+  get availableColors(){
+    return `${this.apiBaseUrl}/api/productdetail/AvailableColors`
+  }
+
+  get availableSizes(){
+    return `${this.apiBaseUrl}/api/productdetail/AvailableSizes`
   }
 
 }

@@ -165,6 +165,10 @@ export class NavComponent implements OnInit {
     //});      
   }
 
+  viewCart(){
+    this.router.navigate(['/cart']);
+  }
+
 
 
 

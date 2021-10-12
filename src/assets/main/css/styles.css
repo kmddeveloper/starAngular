@@ -2967,33 +2967,33 @@ textarea.form-control-lg {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #f4623a;
-  border-color: #f4623a;
+  color: #fff!important;
+  background-color: #f4623a!important;
+  border-color: #f4623a!important;
 }
 .btn-primary:hover {
-  color: #fff;
-  background-color: #cf5331;
-  border-color: #c34e2e;
+  color: #fff!important;
+  background-color: #cf5331!important;
+  border-color: #c34e2e!important;
 }
 .btn-check:focus + .btn-primary, .btn-primary:focus {
   color: #fff;
-  background-color: #cf5331;
-  border-color: #c34e2e;
+  background-color: #cf5331!important;
+  border-color: #c34e2e!important;
   box-shadow: 0 0 0 0.25rem rgba(246, 122, 88, 0.5);
 }
 .btn-check:checked + .btn-primary, .btn-check:active + .btn-primary, .btn-primary:active, .btn-primary.active, .show > .btn-primary.dropdown-toggle {
-  color: #fff;
-  background-color: #c34e2e;
-  border-color: #b74a2c;
+  color: #fff!important;
+  background-color: #c34e2e!important;
+  border-color: #b74a2c!important;
 }
 .btn-check:checked + .btn-primary:focus, .btn-check:active + .btn-primary:focus, .btn-primary:active:focus, .btn-primary.active:focus, .show > .btn-primary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.25rem rgba(246, 122, 88, 0.5);
 }
 .btn-primary:disabled, .btn-primary.disabled {
-  color: #fff;
-  background-color: #f4623a;
-  border-color: #f4623a;
+  color: #fff!important;
+  background-color: #f4623a!important;
+  border-color: #f4623a!important;
 }
 
 .btn-secondary {
@@ -3897,6 +3897,7 @@ textarea.form-control-lg {
   border: 1px solid transparent;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
+  font-weight: bolder;
 }
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
   border-color: #e9ecef #e9ecef #dee2e6;
@@ -10790,15 +10791,26 @@ header.masthead h1, header.masthead .h1 {
 .portfolio-details .portfolio-info ul {
   list-style: none;
   padding: 0;
+  margin: 1 1 1 1;
   font-size: 15px;
 }
 
 .portfolio-details .portfolio-info ul li + li {
-  margin-top: 10px;
+  margin-top: 1px;
+}
+
+.portfolio-details .portfolio-selections {
+  padding: 20px;
+  
+}
+
+.portfolio-details .portfolio-selections .selection-item {
+  margin-bottom: 8px;
+  
 }
 
 .portfolio-details .portfolio-description {
-  padding-top: 30px;
+  padding-top: 0px;
 }
 
 .portfolio-details .portfolio-description h2 {
@@ -10933,3 +10945,29 @@ li.borderless {
 .cart-status{
   font-style: italic;
 }
+
+#btn-main-color{
+ margin-top: 10px;
+ background-color: #f4623a;
+ color: #fff;
+ border-color: #f4623a;
+ font-size:1.5rem;
+}
+
+.detail-slider{
+  display:block;
+  margin-top: 25px;
+  max-height: 400px;
+}
+
+.xzoom-gallery {
+  margin-top: 10px
+}
+
+.xzoom {
+  margin-top: 40px
+}
+
+
+
+

@@ -35,7 +35,7 @@ console.log('app module loaded');
     
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,  
     HttpClientModule,
     AppRoutingModule,
     FormsModule,

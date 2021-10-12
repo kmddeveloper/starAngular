@@ -3,11 +3,11 @@ import { CookiesService } from '../cookies/cookies.service';
 import { StateService } from '../state/state.service';
 import { UtilsService } from '../utils/utils.service';
 import {ShoppingCart} from 'src/app/core/models/ShoppingCart';
-import {CartItem} from 'src/app/core/models/CartItem';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpService } from '../http/http.service';
 import { EndpointService } from '../endpoint/endpoint.service';
 import { ApiResponse } from '../../models/ApiResponse';
+import { ProductService } from '../product/product.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +16,13 @@ export class ShoppingCartService{
   
 
 
-private _shopping_cart_state = new BehaviorSubject<ShoppingCart>({itemsInCart:null, count:0});
+private _shopping_cart_state = new BehaviorSubject<ShoppingCart>({itemsInCart:null, count:0, total:0});
 
 public shopping_cart_state$ =  this._shopping_cart_state.asObservable();
 
 constructor(private cookiesService:CookiesService, private stateService:StateService, 
             private utilsService:UtilsService, private httpService:HttpService,
-            private endpointService:EndpointService) { 
+            private endpointService:EndpointService, private productService:ProductService) { 
               this.initialize();
             }
           
@@ -46,8 +46,32 @@ constructor(private cookiesService:CookiesService, private stateService:StateSer
     });         
   }
 
-  addToCart(productId:number, quantities:number=1){   
-    let addSub = this.httpService.postAsync<ApiResponse<ShoppingCart>>(`${this.endpointService.addItemToCart}`,{"productid":productId, "quantity": quantities, "userid":this.userid}).subscribe({
+
+  addItemToCart(productId:number, colorId:number, sizeId:number, quantities:number){
+    let reqSub = this.productService.requestProfuctItemId(productId,colorId,sizeId).subscribe({
+
+      next: data => {
+            if (data && Number(data.result)){
+                console.log('calling add to cart');
+                this.addToCart(productId, data.result, quantities);
+            }
+      },      
+      error: error => {
+        console.log('Error add to cart');
+      },
+      complete: ()=>{
+        console.log('Completed add to cart');
+      }
+    })
+   
+
+  }
+
+  addToCart(productId:number, productItemId:number, quantities:number=1){   
+
+    console.log('userid=', this.userid);
+
+    let addSub = this.httpService.postAsync<ApiResponse<ShoppingCart>>(`${this.endpointService.addItemToCart}`,{"productid":productId, "productitemid":productItemId, "quantity": quantities, "userid":this.userid}).subscribe({
         next: data=>{
           if (data && data.result){
             this.setState(data.result);
@@ -85,15 +109,12 @@ constructor(private cookiesService:CookiesService, private stateService:StateSer
     this._shopping_cart_state.next(shoppingCart);
   }
 
-  getCartItem(productId:number, quantities:number):CartItem{
-    return {
-      productid:productId,     
-      quantity:quantities,  
-    }
+  getCart():Observable<ApiResponse<ShoppingCart>>{
+    return this.httpService.getAsync<ApiResponse<ShoppingCart>>(`${this.endpointService.getCart}/${this.userid}`);
   }
 
   private get initCart():ShoppingCart{
-    return {itemsInCart:null, count:0};
+    return {itemsInCart:null, count:0, total:0};
   }
 
 /*

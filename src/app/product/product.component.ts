@@ -63,7 +63,7 @@ export class ProductComponent implements OnInit, IproductList {
       this.stateService.state$.subscribe({
         next: state=>{    
               this.role=state.role;              
-              this.btnLabel=this.role=='admin'? 'Edit': 'Add to cart';
+              this.btnLabel=this.role=='admin'? 'Edit': 'Buy';
         },
         error: error => {
             console.log('state error=', error);
@@ -124,8 +124,8 @@ export class ProductComponent implements OnInit, IproductList {
       next: data => {  //next            
         if (data){
 
-           if (data.error)
-              this.error = data.error.message;
+           if (data.apiError)
+              this.error = data.apiError.message;
            else
             this.totalItems = data.result;                  
         }},              
@@ -150,8 +150,8 @@ export class ProductComponent implements OnInit, IproductList {
       next: data => {  //next            
         if (data){
             console.log('next');
-            if (data.error){
-              this.error = data.error.message;
+            if (data.apiError){
+              this.error = data.apiError.message;
             }
             else{
               this._grid=this.populateGrid(data.result);    
@@ -211,7 +211,8 @@ export class ProductComponent implements OnInit, IproductList {
     }
     else{
       console.log('other user clicks=', code);
-      this.addToCart(id);
+      //this.addToCart(id);
+      this.detailPage(code);
     }
     
   }
@@ -224,7 +225,5 @@ export class ProductComponent implements OnInit, IproductList {
     this.router.navigate([`/product/product-detail`], {queryParams: {code: code}});
   }
 
-  addToCart(id:number){
-    this.shoppingCartService.addToCart(id, 1);
-  }
+ 
 }

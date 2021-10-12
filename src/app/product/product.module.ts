@@ -11,7 +11,7 @@ import { EditComponent } from './edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductDetailComponent } from './product-detail.component';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
-
+import { NgxImgZoomModule  } from 'ngx-img-zoom';
 
 console.log('product module loaded');
 
@@ -28,12 +28,8 @@ console.log('product module loaded');
     SharedModule,
     MatPaginatorModule,
     ReactiveFormsModule,
-    NgxUsefulSwiperModule
-
- 
-  
-
-  
+    NgxUsefulSwiperModule,
+    NgxImgZoomModule
   ],
   exports:[
     ReactiveFormsModule

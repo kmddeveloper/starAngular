@@ -1,14 +1,14 @@
 
 
 export class Product{
-    id:Number;
-    name:String;
-    description:String;
-    code: String;
-    category:String;
-    categoryId:Number;
-    note:String;
-    statusId:String;
-    price:String;
-    imageUrl:String;
+    id:number;
+    name:string;
+    description:string;
+    code: string;
+    category:string;
+    categoryId:number;
+    note:string;
+    statusId:string;
+    price:string;
+    imageUrl:string;
 }

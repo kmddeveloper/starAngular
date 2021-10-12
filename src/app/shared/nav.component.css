@@ -61,6 +61,7 @@
     flex-basis: 100%;
     flex-grow: 1;
     align-items: center;
+    width:100px;
   }
   
   .navbar-toggler {
@@ -72,11 +73,13 @@
     border-radius: 0.25rem;
     transition: box-shadow 0.15s ease-in-out;
     background-color:#fff!important;
+    
   }
   @media (prefers-reduced-motion: reduce) {
     .navbar-toggler {
       transition: none;    
-    }
+     
+    } 
   }
   .navbar-toggler:hover {
     text-decoration: none;
@@ -95,18 +98,31 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
+    
   }
+
+
   
   .navbar-nav-scroll {
     max-height: var(--bs-scroll-height, 75vh);
     overflow-y: auto;
   }
   
+  @media only screen and (max-width: 975px) {
+   .container .row {
+     padding-right: 160px!important;
+     width:100px;
+   }
+  }
+
   @media (min-width: 576px) {
+  
+
     .navbar-expand-sm {
       flex-wrap: nowrap;
       justify-content: flex-start;
     }
+  
     .navbar-expand-sm .navbar-nav {
       flex-direction: row;
     }

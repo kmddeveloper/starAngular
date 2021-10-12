@@ -51,11 +51,11 @@ export class StateService {
                 next: data => {
                     if (data)
                     {
-                      if (data.error)
+                      if (data.apiError)
                       {
                         this.tokenService.removeToken(); //Invalid token or token has been modified.
                         this.resetState();
-                        console.log('reload session context error=', data.error);
+                        console.log('reload session context error=', data.apiError);
                         sub.unsubscribe();
                       }
                       else{

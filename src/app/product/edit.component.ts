@@ -16,10 +16,10 @@ import { errorBase } from '../core/common/errorBase';
 export class EditComponent extends errorBase implements OnInit {
 
   editProductForm:FormGroup;
-  productId: Number;
+  productId: number;
 
-  productStatus:Array<DropdownField<Number,String>>;
-  productCategory:Array<DropdownField<Number,String>>;
+  productStatus:Array<DropdownField<number,string>>;
+  productCategory:Array<DropdownField<number,string>>;
 
   constructor(private formBuilder:FormBuilder, private activatedRoute:ActivatedRoute,
               private productService:ProductService, private router:Router) {
@@ -59,9 +59,9 @@ export class EditComponent extends errorBase implements OnInit {
             next: data => {  
               if (data)      
               {     
-                if (data.error)
+                if (data.apiError)
                 {
-                  this.error= data.error.message;
+                  this.error= data.apiError.message;
                 }
                 else{
                   this.setFormData(data.result);
@@ -122,9 +122,9 @@ export class EditComponent extends errorBase implements OnInit {
       let updateSub = this.productService.updateItem(product).subscribe({
         next: data => {
             if (data){
-                if (data.error){
+                if (data.apiError){
                     console.log('product updated Failed');
-                    this.setErrorMessage(data.error.message); 
+                    this.setErrorMessage(data.apiError.message); 
                 }
                 else{                
                   console.log('product updated Success');

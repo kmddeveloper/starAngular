@@ -1,43 +1,96 @@
  <!-- ======= Portfolio Details Section ======= -->
  <section id="portfolio-details" class="portfolio-details">    
     <app-back></app-back>
-    <div class="container"  >
+    <div class="container">
       
       <div class="row gy-4">
 
-        <div class="col-lg-8">
-          <div class="portfolio-details-slider swiper-container">
+        <div class="col-lg-7 detail-slider"> 
 
-            <swiper [config]="config"  [(index)]="index" *ngIf="loaded">            
+          <div class="portfolio-details-slider swiper-container">
+            <swiper [config]="config"  [(index)]="index" *ngIf="loaded && productImageUrls.length > 0">            
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img [src]="product.imageUrl" [alt]="product.name"></div>
-                    <div class="swiper-slide"><img src="https://m.media-amazon.com/images/I/61ExSBpXT+L._AC_UL320_.jpg" [alt]="product.name"></div>
-                    <div class="swiper-slide"><img src="https://m.media-amazon.com/images/I/81J6zDA5aYL._AC_UL320_.jpg" [alt]="product.name"></div>
+                    <div class="swiper-slide" *ngFor="let imageUrl of productImageUrls">  
+                      
+                    
+                      <img [src]="imageUrl" *ngIf="imageUrl" />  
+                   
+                        <!--
+                      <ngx-img-zoom
+                      [zoomImageSrc]="imageUrl"
+                      [previewImageSrc]="imageUrl"
+                      [imgStyle]="'width:515px; height:515px; bottom:0;  left:0;  right:0;  top:0;  margin:0 auto; border:1px solid #dcdcdc;'"
+                      [resultStyle]="'width:824px; height:824px; background-repeat: no-repeat; z-index: 2; position:absolute;-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); top: 0;left: 100%;'"
+                      [lensStyle]="'width:55px; height:55px'"
+                      [enableZoom]="false"
+                      [containerStyle]=""
+                    ></ngx-img-zoom>   
+                    --> 
+                  </div>
                 </div>
-             
                 <!-- Add Pagination -->
                 <div class="swiper-pagination"></div>
 
                 <!-- Add Arrows -->
                 <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-
-                 
+                <div class="swiper-button-prev"></div>                 
               
             </swiper>
           </div>
         </div>
 
-        <div class="col-lg-4" *ngIf="loaded">
+
+        <div class="col-lg-5" *ngIf="loaded">
           <div class="portfolio-info">
             <h3>Product information</h3>
-            <ul>
-              <li><strong>Name</strong>: {{product.name}}</li>
-              <li><strong>Category</strong>: {{product.category}}</li>
-              <li><strong>Status</strong>: {{product.status}}</li>
-              <li><strong>Price</strong>: {{product.price | currency: 'USD'}}</li>
-            </ul>
+            <div><strong>Name</strong>: {{productDetail.product.name}}</div>
+            <div><strong>Category</strong>: {{productDetail.product.category}}</div>
+            <div><strong>Status</strong>: {{productDetail.product.status}}</div>            
+            <div><strong>Price</strong>:<strong> {{productDetail.product.price | currency: 'USD'}}</strong></div>
+            <div *ngIf="productDetail.product_attributes && productDetail.product_attributes.length > 0">
+              <ul *ngFor="let item of productDetail.product_attributes">
+                <li>{{item.attribute}}</li>         
+              </ul>
+            </div>
           </div>
+
+          <form [formGroup]="shoppingForm" (ngSubmit)="submit()">
+
+            <div class="portfolio-selections">
+              
+              <div class="selection-item">
+                <select class="form-select" aria-label="Color" formControlName="color">
+                  <option selected value='0'>Select color</option>
+                  <option *ngFor="let item of availableColors" value="{{item.id}}">{{item.color}}</option>                 
+                </select>
+
+              </div>
+              <div class="selection-item">
+                <select class="form-select" aria-label="Size" formControlName="size">
+                  <option selected value='0'>Select size</option>
+                  <option *ngFor="let item of availableSizes" value="{{item.id}}">{{item.size}}</option>
+                 
+                </select>
+
+              </div>
+
+              <div class="selection-item">
+                <select class="form-select" aria-label="Quantity" formControlName="quantity">                  
+                  <option value="1">Qty: 1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+
+              <div class="selection-item">
+                <button type="submit" class="btn btn-md" id="btn-main-color"  [disabled]="!shoppingForm.valid" >
+                  <small>Add to cart</small>
+              </button>
+              </div>
+            </div>
+          </form>
+
+
           <div class="portfolio-description">
             <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -47,21 +100,31 @@
                 
               </div>
             </nav>
-
-            <div class="tab-content" id="nav-tabContent">
-              <div [ngClass]="[featureContentTab]" id="nav-features" role="tabpanel" aria-labelledby="nav-features-tab">
-                <br>
-                {{product.description}}
-              </div>
-              <div [ngClass]="[specsContentTab]" id="nav-specs" role="tabpanel" aria-labelledby="nav-specs-tab">
-                {{product.description}}
-              </div>
-              <div [ngClass]="[otherContentTab]" id="nav-others" role="tabpanel" aria-labelledby="nav-others-tab">
-                
-              </div>
-            </div>
-
           </div>
+          <div class="tab-content" id="nav-tabContent">
+            <div [ngClass]="[featureContentTab]" id="nav-features" role="tabpanel" aria-labelledby="nav-features-tab">
+              <br>
+              {{productDetail.product.description}}
+            </div>
+            <div [ngClass]="[specsContentTab]" id="nav-specs" role="tabpanel" aria-labelledby="nav-specs-tab">
+                <div *ngFor="let spec of productDetail.product_specs"> 
+                    <h10><strong>{{spec.title}}</strong></h10>
+                    <ul *ngFor="let field of spec.fields">
+                      <li>
+                        <span *ngIf="field.key">
+                          <strong>{{field.key}}</strong>: 
+                        </span>
+                        {{field.value}}                        
+                      </li>
+                    </ul>
+                </div>  
+            </div>
+            <div [ngClass]="[otherContentTab]" id="nav-others" role="tabpanel" aria-labelledby="nav-others-tab">
+              
+            </div>
+          </div>
+
+         
         </div>
 
       </div>

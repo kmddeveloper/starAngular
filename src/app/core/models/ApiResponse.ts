@@ -1,5 +1,5 @@
 export class ApiResponse<T>{
     statusCode:Number;
-    error:Error;
+    apiError:Error;
     result:T;
 }
